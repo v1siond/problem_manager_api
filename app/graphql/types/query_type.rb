@@ -20,5 +20,13 @@ module Types
     def questions
       Question.all
     end
+
+    field :question, Types::QuestionType, null: false do
+      argument :id, ID, required: true
+    end
+
+    def question(id:)
+      Question.find(id)
+    end
   end
 end
