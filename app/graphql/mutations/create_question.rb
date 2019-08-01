@@ -6,7 +6,7 @@ class Mutations::CreateQuestion < Mutations::BaseMutations
   field :errors, [String], null: false
 
   def resolve(title:, body:)
-    question = Question.new(user_id: context[:current_user].id, title: title, body: body)
+    question = Question.new(user_id: context[:current_user]&.id, title: title, body: body)
     if question.save
       {
         question: question,

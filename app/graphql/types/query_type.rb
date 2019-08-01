@@ -1,24 +1,11 @@
 module Types
   class QueryType < Types::BaseObject
 
-    field :users, [Types::UserType], null: false
-
-    def users
-      User.all
-    end
-
-    field :user, Types::UserType, null: false do
-      argument :id, ID, required: true
-    end
-
-    def user(id:)
-      User.find(id)
-    end
-
     field :questions, [Types::QuestionType], null: false
 
     def questions
-      Question.all
+      puts context[:current_user]
+      context[:current_user]&.questions || false
     end
 
     field :question, Types::QuestionType, null: false do
