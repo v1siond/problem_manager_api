@@ -4,7 +4,6 @@ module Types
     field :questions, [Types::QuestionType], null: false
 
     def questions
-      puts context[:current_user]
       context[:current_user]&.questions || false
     end
 
