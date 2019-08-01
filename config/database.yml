@@ -14,7 +14,7 @@
 
 default: &default
   adapter:  postgresql
-  host:     localhost
+  host:     <%= ENV['PGHOST'] %>
   encoding: unicode
   pool:     5
   username: <%= ENV['PGUSER'] %>
@@ -33,4 +33,4 @@ test:
 
 production:
   <<: *default
-  database: problem_manager-production
+  database: <%= ENV['PGDBNAME'] %>
