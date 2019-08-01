@@ -4,6 +4,9 @@ module Types
     field :questions, [Types::QuestionType], null: false
 
     def questions
+      if context[:current_user].blank?
+        raise GraphQL::ExecutionError, 'Authentication required'
+      end
       context[:current_user]&.questions || false
     end
 
@@ -12,6 +15,9 @@ module Types
     end
 
     def question(id:)
+      if context[:current_user].blank?
+        raise GraphQL::ExecutionError, 'Authentication required'
+      end
       Question.find(id)
     end
   end

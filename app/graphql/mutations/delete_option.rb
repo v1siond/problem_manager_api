@@ -4,6 +4,9 @@ class Mutations::DeleteOption < Mutations::BaseMutations
   field :errors, [String], null: false
 
   def resolve(id:)
+    if context[:current_user].blank?
+      raise GraphQL::ExecutionError, 'Authentication required'
+    end
     option = Option.find(id)
     if option.destroy
       {

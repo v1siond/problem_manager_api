@@ -4,6 +4,9 @@ class Mutations::DeleteQuestion < Mutations::BaseMutations
   field :errors, [String], null: false
 
   def resolve(id:)
+    if context[:current_user].blank?
+      raise GraphQL::ExecutionError, 'Authentication required'
+    end
     question = Question.find(id)
     if question.destroy
       {

@@ -7,6 +7,9 @@ class Mutations::CreateQuestion < Mutations::BaseMutations
   field :errors, [String], null: false
 
   def resolve(title:, body:, options:)
+    if context[:current_user].blank?
+      raise GraphQL::ExecutionError, 'Authentication required'
+    end
     question = Question.new(user_id: context[:current_user]&.id, title: title, body: body)
     question.save!
     options.each do |option|
